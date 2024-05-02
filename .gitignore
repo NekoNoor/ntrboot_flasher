@@ -1,10 +1,10 @@
-build
-ntrboot_flasher.*
+*.d
+*.elf
 *.firm
 *.firm.sha
-*.o
-*.elf
-*.d
-
 *.gch
+*.o
 *~
+build
+ntrboot_flasher.*
+result
