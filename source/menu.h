@@ -21,3 +21,4 @@ uint8_t menu_flashcart_menu(const char* flashcart_name);
 // From platform.cpp
 char const *loglevel_str(void);
 void toggleLoglevel(void);
+void toggleSpoofFlashchip(void);

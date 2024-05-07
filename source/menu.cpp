@@ -1,7 +1,9 @@
 #include "menu.h"
 
 #include <ncgcpp/ntrcard.h>
+#include <string>
 
+#include "platform.h"
 #include "device.h"
 
 #include "hid.h"
@@ -11,6 +13,10 @@
 
 using flashcart_core::Flashcart;
 using flashcart_core::flashcart_list;
+using flashcart_core::spoofFlashchip;
+using flashcart_core::flashchip_ids;
+using flashcart_core::flashchip_count;
+using flashcart_core::spoofedFlashchip;
 
 void menu_wait_cart_insert()
 {
@@ -63,6 +69,8 @@ int8_t menu_select_flashcart()
     ClearScreen(TOP_SCREEN, STD_COLOR_BG);
 
     size_t deviceOption = 0;
+	size_t flashchipOption = 0;
+	char flashchipString[7];
     while(true)
     {
         DrawRectangle(TOP_SCREEN, 0, 0, SCREEN_WIDTH_TOP, 12, COLOR_BLUE);
@@ -90,6 +98,11 @@ int8_t menu_select_flashcart()
                 DrawRectangle(BOTTOM_SCREEN, 0, 0, SCREEN_WIDTH_TOP, 12, COLOR_BLUE);
                 DrawString(BOTTOM_SCREEN, 106, 0, COLOR_WHITE, COLOR_BLUE, "Selected Cart Info");
 
+				if (strcmp((*it)->getName(), "DSTT") == 0)
+				{
+					DrawStringF(BOTTOM_SCREEN, 10, 10, STD_COLOR_FONT, STD_COLOR_BG, "(X) Spoof Flashchip: 0x%04x (%s)", spoofedFlashchip, spoofFlashchip ? "on" : "off");
+				}
+
                 DrawStringF(BOTTOM_SCREEN, 10, 20, STD_COLOR_FONT, STD_COLOR_BG, "Name: %s", (*it)->getName());
                 DrawStringF(BOTTOM_SCREEN, 10, 30, STD_COLOR_FONT, STD_COLOR_BG, "Author: %s", (*it)->getAuthor());
 
@@ -101,10 +114,22 @@ int8_t menu_select_flashcart()
         if (deviceOption >= 1 && (keys & BUTTON_UP)) deviceOption--;
         if (keys & BUTTON_DOWN) deviceOption++;
 
-        if(deviceOption >= flashcart_list->size()) deviceOption = flashcart_list->size() - 1;
+        if (deviceOption >= flashcart_list->size()) deviceOption = flashcart_list->size() - 1;
+
+        if (flashchipOption >= 1 && (keys & BUTTON_LEFT)) {
+			flashchipOption--;
+			spoofedFlashchip = flashchip_ids[flashchipOption];
+		}
+        if (keys & BUTTON_RIGHT) {
+			flashchipOption++;
+			spoofedFlashchip = flashchip_ids[flashchipOption];
+		}
+
+        if (flashchipOption >= flashchip_count) flashchipOption = flashchip_count - 1;
 
         if (keys & BUTTON_A) return deviceOption;
         if (keys & BUTTON_B) return -1;
+        if (keys & BUTTON_X) toggleSpoofFlashchip();
         if (keys & BUTTON_Y) toggleLoglevel();
         if (keys & BUTTON_START) {
             ELM_Unmount();
