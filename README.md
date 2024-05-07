@@ -1,3 +1,16 @@
+# !!! UNSAFE FORK
+
+This is just a simple fork to allow spoofing of what DSTT flashchip commands to send.
+It allows you to restore some non-working dstt flashcarts that show up as flashchip id 0xffffffff or 0x00000000 etc.
+
+You can easily compile it on NixOS/Nix by running `nix-shell` and then `make` in the corresponing nix-shell that opens, it will get a working old setup of DevkitARM that can compile this code.
+
+Once you have compiled it, just run it like you would any other `.firm` file (godmode9, luma chainload, fastboot3ds etc.).
+
+In the select flashcart menu, when you select DSTT, you can use left and right on the D-Pad to select what flashchip id you want to spoof, and then X to enable spoofing.
+
+It will then use those commands to interface with the flashcart rather than the "unsupported flashcart" error that would otherwise show up. You can use this to restore a DSTT-backup.bin from gbatemp/flashcart archive/your own backup.
+
 # ntrboot_flasher
 _A tool to flash that bootrom-hax goodness to your flashcart._
 
