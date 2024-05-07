@@ -9,7 +9,7 @@ Once you have compiled it, just run it like you would any other `.firm` file (go
 
 In the select flashcart menu, when you select DSTT, you can use left and right on the D-Pad to select what flashchip id you want to spoof, and then X to enable spoofing.
 
-Find your flashchip in [this file](https://github.com/ntrteam/flashcart_core/blob/03d464c8405cabe2f08395645b4b7c98dadc045d/devices/dstt.cpp#L13) and select the corresponding flashchip id in the menu. if you don't know what flashchip your cart has, check under the sticker or just kinda guess.
+Find your flashchip in [this file](https://github.com/NekoNoor/flashcart_core/blob/61c58d2bcf1cf0926e091939cee6bf2b6ddec542/devices/dstt.cpp#L13) and select the corresponding flashchip id in the menu. if you don't know what flashchip your cart has, check under the sticker or just kinda guess.
 
 It will then use those commands to interface with the flashcart rather than the "unsupported flashcart" error that would otherwise show up. You can use this to restore a DSTT-backup.bin from gbatemp/flashcart archive/your own backup.
 
